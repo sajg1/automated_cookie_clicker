@@ -54,6 +54,13 @@ while True:
                 affordable_upgrades[cost] = id
         print(affordable_upgrades)
 
+        # highest priced upgrade that can be purchased
+        highest_upgrade = max(affordable_upgrades)
+        print(highest_upgrade)
+
+        # click the highest possible upgrade
+        driver.find_element(By.ID, upgrades_dict[highest_upgrade]).click()
+
 
 
 
