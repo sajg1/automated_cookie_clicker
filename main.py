@@ -39,6 +39,15 @@ while True:
             print(price)
             prices.append(price)
 
+        # create dictionary with prices and upgrade_id
+        upgrades_dict = {}
+        for n in range(len(prices)):
+            upgrades_dict[prices[n]] = item_ids[n]
+
+        cookie_tally = int(driver.find_element(By.CSS_SELECTOR, 'div #money').text)
+        print("Cookie Tally, ", cookie_tally)
+
+
 
 
 
