@@ -47,6 +47,13 @@ while True:
         cookie_tally = int(driver.find_element(By.CSS_SELECTOR, 'div #money').text)
         print("Cookie Tally, ", cookie_tally)
 
+        # dictionary of upgrades that can be purchased
+        affordable_upgrades = {}
+        for cost, id in upgrades_dict.items():
+            if cookie_tally > cost:
+                affordable_upgrades[cost] = id
+        print(affordable_upgrades)
+
 
 
 
