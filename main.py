@@ -61,6 +61,14 @@ while True:
         # click the highest possible upgrade
         driver.find_element(By.ID, upgrades_dict[highest_upgrade]).click()
 
+        # add 5 seconds
+        timeout_time += 5
+
+        # break out of loop after 5 minutes
+        if time.time() > start_time + 60 * 5:
+            break
+
+
 
 
 
