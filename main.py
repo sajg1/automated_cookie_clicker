@@ -44,13 +44,16 @@ while True:
         for n in range(len(prices)):
             upgrades_dict[prices[n]] = item_ids[n]
 
-        cookie_tally = int(driver.find_element(By.CSS_SELECTOR, 'div #money').text)
+        cookie_tally = driver.find_element(By.CSS_SELECTOR, 'div #money').text
+
+        if "," in cookie_tally:
+            cookie_tally = cookie_tally.replace(",", "")
         print("Cookie Tally, ", cookie_tally)
 
         # dictionary of upgrades that can be purchased
         affordable_upgrades = {}
         for cost, id in upgrades_dict.items():
-            if cookie_tally > cost:
+            if int(cookie_tally) > cost:
                 affordable_upgrades[cost] = id
         print(affordable_upgrades)
 
