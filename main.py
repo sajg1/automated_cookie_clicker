@@ -15,40 +15,35 @@ cookie_tally = driver.find_element(By.XPATH, '//*[@id="money"]')
 # Upgrade ID's
 items = driver.find_elements(By.CSS_SELECTOR, "#store div")
 item_ids = [item.get_attribute("id") for item in items]
-print(len(item_ids))
 
 
 start_time = time.time()
-timeout_time = start_time + 5
+timeout_time = start_time + 10
 
 while True:
 
     cookie.click()
 
     if time.time() > timeout_time:
-
         # find web elements for upgrades
         store = driver.find_elements(By.CSS_SELECTOR, '#store b')
-        print(len(store))
         prices = []
         # get prices for upgrades
         for item in store:
             text = item.text
             if text != "":
                 price = int(text.split("-")[1].strip().replace(",",""))
-            print(price)
             prices.append(price)
 
         # create dictionary with prices and upgrade_id
         upgrades_dict = {}
-        for n in range(len(prices)):
+        for n in range(1, len(prices)):
             upgrades_dict[prices[n]] = item_ids[n]
 
         cookie_tally = driver.find_element(By.CSS_SELECTOR, 'div #money').text
 
         if "," in cookie_tally:
             cookie_tally = cookie_tally.replace(",", "")
-        print("Cookie Tally, ", cookie_tally)
 
         # dictionary of upgrades that can be purchased
         affordable_upgrades = {}
@@ -58,17 +53,17 @@ while True:
         print(affordable_upgrades)
 
         # highest priced upgrade that can be purchased
-        highest_upgrade = max(affordable_upgrades)
-        print(highest_upgrade)
+        if len(affordable_upgrades) > 0:
+            highest_upgrade = max(affordable_upgrades)
 
-        # click the highest possible upgrade
-        driver.find_element(By.ID, upgrades_dict[highest_upgrade]).click()
-
+            # click the highest possible upgrade
+            driver.find_element(By.ID, upgrades_dict[highest_upgrade]).click()
         # add 5 seconds
-        timeout_time += 5
+        timeout_time += 10
 
         # break out of loop after 5 minutes
         if time.time() > start_time + 60 * 5:
+            print(driver.find_element(By.CSS_SELECTOR, "div #cps").text.split(":")[1].strip())
             break
 
 
